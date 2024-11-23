@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form Sapa Menggunakan AJAX</title>
+  <script>
+    function kirimSapa() {
+      const nama = document.getElementById("nama").value;
+      const hasil = document.getElementById("hasil");
+
+      // Membuat objek XMLHttpRequest
+      const xhr = new XMLHttpRequest();
+
+      // Konfigurasi permintaan
+      xhr.open("POST", "sapa.php", true);
+      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+      // Mengirim data ke server
+      xhr.send("nama=" + encodeURIComponent(nama));
+
+      // Respons dari server
+      xhr.onload = function () {
+        if (xhr.status === 200) {
+          hasil.innerHTML = xhr.responseText; // Menampilkan respons di div
+        } else {
+          hasil.innerHTML = "Terjadi kesalahan.";
+        }
+      };
+    }
+  </script>
+</head>
+<body>
+  <h1>Form Sapa Menggunakan AJAX</h1>
+  
+  <form onsubmit="event.preventDefault(); kirimSapa();">
+    <label for="nama">Nama:</label>
+    <input type="text" id="nama" name="nama" required>
+    <button type="submit">Kirim</button>
+
+  </form>
+  <div id="hasil" style="margin-top: 20px; font-weight: bold;"></div>
+
+</body>
+</html>
